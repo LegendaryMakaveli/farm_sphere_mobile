@@ -1,0 +1,36 @@
+{
+  "name": "farm_sphere_mobile_rn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start",
+    "start:tunnel": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --tunnel",
+    "android": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --android",
+    "ios": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --ios",
+    "web": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --web",
+    "fix-deps": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first npx expo install --fix"
+  },
+  "dependencies": {
+    "@react-native-picker/picker": "2.11.1",
+    "@react-navigation/bottom-tabs": "^7.15.9",
+    "@react-navigation/native": "^7.2.2",
+    "@react-navigation/stack": "^7.8.10",
+    "@reduxjs/toolkit": "^2.11.2",
+    "expo": "~54.0.33",
+    "expo-secure-store": "~15.0.8",
+    "expo-status-bar": "~3.0.9",
+    "json5": "^2.2.3",
+    "lucide-react-native": "^1.8.0",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "react-redux": "^9.2.0"
+  },
+  "private": true,
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^5.0.3",
+    "babel-preset-expo": "^55.0.17"
+  }
+}
