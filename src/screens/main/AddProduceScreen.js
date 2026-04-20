@@ -27,7 +27,8 @@ export function AddProduceScreen({ navigation }) {
       await listProduce({
         ...formData,
         quantityAvailable: parseFloat(formData.quantityAvailable),
-        pricePerUnit: parseFloat(formData.pricePerUnit)
+        pricePerUnit: parseFloat(formData.pricePerUnit),
+        dateCreated: new Date().toISOString().split('T')[0]
       }).unwrap();
       Alert.alert('Success', 'Produce listed successfully!', [
         { text: 'OK', onPress: () => navigation.goBack() }

@@ -41,23 +41,25 @@ function MainTabs() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size, focused }) => {
+          const iconSize = size + 4;
           let icon;
-          if (route.name === 'Home') icon = <Home color={color} size={size} strokeWidth={focused ? 2.5 : 2} />;
-          else if (route.name === 'Market') icon = <Store color={color} size={size} strokeWidth={focused ? 2.5 : 2} />;
-          else if (route.name === 'Settings') icon = <Settings color={color} size={size} strokeWidth={focused ? 2.5 : 2} />;
-          else if (route.name === 'Plot') icon = <Map color={color} size={size} strokeWidth={focused ? 2.5 : 2} />;
-          else if (route.name === 'Portfolio') icon = <Briefcase color={color} size={size} strokeWidth={focused ? 2.5 : 2} />;
+          if (route.name === 'Home') icon = <Home color={color} size={iconSize} strokeWidth={focused ? 2.5 : 2} />;
+          else if (route.name === 'Market') icon = <Store color={color} size={iconSize} strokeWidth={focused ? 2.5 : 2} />;
+          else if (route.name === 'Settings') icon = <Settings color={color} size={iconSize} strokeWidth={focused ? 2.5 : 2} />;
+          else if (route.name === 'Plot') icon = <Map color={color} size={iconSize} strokeWidth={focused ? 2.5 : 2} />;
+          else if (route.name === 'Portfolio') icon = <Briefcase color={color} size={iconSize} strokeWidth={focused ? 2.5 : 2} />;
           return icon;
         },
         tabBarActiveTintColor: '#16a34a',
         tabBarInactiveTintColor: '#94a3b8',
-        tabBarLabelStyle: { fontSize: 11, fontWeight: '600', marginBottom: 4 },
+        tabBarLabelStyle: { fontSize: 12, fontWeight: '700', marginBottom: 8 },
         tabBarStyle: {
-          height: 64,
-          paddingTop: 8,
+          height: 84,
+          paddingTop: 12,
+          paddingBottom: 20,
           backgroundColor: '#ffffff',
           borderTopWidth: 0,
-          elevation: 20,
+          elevation: 25,
           shadowColor: '#64748b',
           shadowOffset: { width: 0, height: -4 },
           shadowOpacity: 0.08,

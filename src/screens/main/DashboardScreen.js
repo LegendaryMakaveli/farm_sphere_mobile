@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Ima
 import { useSelector } from 'react-redux';
 import { selectCurrentUser, selectIsFarmer, selectIsInvestor } from '@/store/slices/authSlice';
 import { useGetProfileStatusQuery } from '@/store/api/authApi';
-import { useGetMyPendingTasksQuery, useGetMyFarmCyclesQuery, useGetMyItemsQuery } from '@/store/api/farmingApi';
+import { useGetMyPendingTasksQuery, useGetMyFarmCyclesQuery } from '@/store/api/farmingApi';
 import { useGetMyProduceQuery } from '@/store/api/marketplaceApi';
 import { useGetMyPortfolioQuery } from '@/store/api/investmentApi';
 import { 

@@ -12,8 +12,8 @@ export function HistoryScreen({ navigation }) {
 
   // Combine and sort by date
   const activities = [
-    ...(ordersResponse?.data?.map(o => ({ ...o, type: 'ORDER', date: o.createdAt })) || []),
-    ...(cyclesResponse?.data?.map(c => ({ ...c, type: 'CYCLE', date: c.createdAt })) || [])
+    ...(ordersResponse?.data?.map(o => ({ ...o, type: 'ORDER', date: o.dateCreated || o.createdAt })) || []),
+    ...(cyclesResponse?.data?.map(c => ({ ...c, type: 'CYCLE', date: c.dateCreated || c.createdAt })) || [])
   ].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const renderItem = ({ item }) => {

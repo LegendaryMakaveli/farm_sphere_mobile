@@ -53,7 +53,7 @@ export function PersonalDetailsScreen({ navigation }) {
           <View style={styles.card}>
             <DetailItem icon={MapPin} label="Home Address" value={user?.address} />
             <DetailItem icon={Shield} label="Account Type" value={user?.roles?.join(', ')} />
-            <DetailItem icon={Calendar} label="Member Since" value={new Date(user?.createdAt).toLocaleDateString()} />
+            <DetailItem icon={Calendar} label="Member Since" value={new Date(user?.dateCreated || user?.createdAt).toLocaleDateString()} />
           </View>
         </View>
 

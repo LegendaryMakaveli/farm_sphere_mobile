@@ -46,6 +46,7 @@ export function RegisterScreen({ navigation }) {
     const payload = {
       ...formData,
       age: parseInt(formData.age, 10),
+      dateCreated: new Date().toISOString().split('T')[0],
     };
 
     try {

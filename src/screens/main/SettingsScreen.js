@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentUser, logout, selectRoles } from '@/store/slices/authSlice';
 import { 
   User, 
   Settings as SettingsIcon, 
@@ -17,6 +16,19 @@ import {
   Briefcase
 } from 'lucide-react-native';
 
+import { 
+  useUpgradeToFarmerMutation, 
+  useUpgradeToInvestorMutation, 
+  useGetProfileStatusQuery 
+} from '@/store/api/authApi';
+import { 
+  selectCurrentUser, 
+  logout, 
+  selectRoles,
+  selectIsFarmer,
+  selectIsInvestor
+} from '@/store/slices/authSlice';
+
 import { useNavigation } from '@react-navigation/native';
 
 export function SettingsScreen() {
@@ -24,7 +36,15 @@ export function SettingsScreen() {
   const navigation = useNavigation();
   const user = useSelector(selectCurrentUser);
   const roles = useSelector(selectRoles) || [];
+  const isFarmer = useSelector(selectIsFarmer);
+  const isInvestor = useSelector(selectIsInvestor);
   const isAuthenticated = !!user;
+
+  const { data: profileStatusRes } = useGetProfileStatusQuery(undefined, { skip: !isAuthenticated });
+  const liveStatus = profileStatusRes?.data || user?.profileStatus;
+
+  const [upgradeToFarmer] = useUpgradeToFarmerMutation();
+  const [upgradeToInvestor] = useUpgradeToInvestorMutation();
 
   const calculateCompletion = () => {
     if (!user) return 0;
@@ -46,8 +66,60 @@ export function SettingsScreen() {
     );
   };
 
-  const SettingRow = ({ icon: Icon, title, value, onPress, color = '#64748b', isDestructive = false }) => (
-    <TouchableOpacity style={styles.settingRow} onPress={onPress}>
+  const handleUpgradeFarmer = () => {
+    Alert.alert(
+      'Join Farmer Program',
+      'Select your farming experience level to apply:',
+      [
+        { text: 'Beginner', onPress: () => submitFarmerUpgrade('BEGINNER') },
+        { text: 'Intermediate', onPress: () => submitFarmerUpgrade('INTERMEDIATE') },
+        { text: 'Experienced', onPress: () => submitFarmerUpgrade('EXPERIENCED') },
+        { text: 'Cancel', style: 'cancel' }
+      ]
+    );
+  };
+
+  const submitFarmerUpgrade = async (experienceLevel) => {
+    try {
+      await upgradeToFarmer({ 
+        experienceLevel,
+        dateCreated: new Date().toISOString().split('T')[0]
+      }).unwrap();
+      Alert.alert('Success', 'Your application to join the Farmer Program has been submitted and is pending review.');
+    } catch (err) {
+      Alert.alert('Error', err?.data?.message || 'Failed to submit application');
+    }
+  };
+
+  const handleUpgradeInvestor = () => {
+    Alert.alert(
+      'Join Investor Program',
+      'Are you sure you want to apply to join the Investor Program?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Apply', 
+          onPress: async () => {
+            try {
+              await upgradeToInvestor({
+                dateCreated: new Date().toISOString().split('T')[0]
+              }).unwrap();
+              Alert.alert('Success', 'Your application to join the Investor Program has been submitted and is pending review.');
+            } catch (err) {
+              Alert.alert('Error', err?.data?.message || 'Failed to submit application');
+            }
+          } 
+        }
+      ]
+    );
+  };
+
+  const SettingRow = ({ icon: Icon, title, value, onPress, color = '#64748b', isDestructive = false, disabled = false }) => (
+    <TouchableOpacity 
+      style={[styles.settingRow, disabled && { opacity: 0.5 }]} 
+      onPress={onPress}
+      disabled={disabled}
+    >
       <View style={[styles.rowIcon, { backgroundColor: isDestructive ? '#fef2f2' : (color + '10') }]}>
         <Icon color={isDestructive ? '#ef4444' : color} size={20} />
       </View>
@@ -55,7 +127,8 @@ export function SettingsScreen() {
         <Text style={[styles.rowTitle, isDestructive && { color: '#ef4444' }]}>{title}</Text>
         {value && <Text style={styles.rowValue}>{value}</Text>}
       </View>
-      {!isDestructive && <ChevronRight color="#cbd5e1" size={16} />}
+      {!isDestructive && !disabled && <ChevronRight color="#cbd5e1" size={16} />}
+      {disabled && !isDestructive && <Text style={styles.disabledText}>Locked</Text>}
     </TouchableOpacity>
   );
 
@@ -133,15 +206,17 @@ export function SettingsScreen() {
             <SettingRow icon={Bell} title="Notifications" color="#2563eb" />
             <SettingRow 
               icon={Briefcase} 
-              title="Join Farmer Program" 
+              title={isFarmer ? "Farmer Program (Active)" : (liveStatus?.farmerStatus === 'SUBMITTED' ? "Farmer Program (Pending)" : "Join Farmer Program")} 
               color="#2563eb" 
-              onPress={() => navigation.navigate('FarmerPlans')}
+              disabled={isFarmer || liveStatus?.farmerStatus === 'SUBMITTED'}
+              onPress={() => isAuthenticated ? handleUpgradeFarmer() : navigation.navigate('Auth')}
             />
             <SettingRow 
               icon={Briefcase} 
-              title="Join Investor Program" 
+              title={isInvestor ? "Investor Program (Active)" : (liveStatus?.investorStatus === 'SUBMITTED' ? "Investor Program (Pending)" : "Join Investor Program")} 
               color="#2563eb" 
-              onPress={() => navigation.navigate('Portfolio')}
+              disabled={isInvestor || liveStatus?.investorStatus === 'SUBMITTED'}
+              onPress={() => isAuthenticated ? handleUpgradeInvestor() : navigation.navigate('Auth')}
             />
           </View>
         </View>
@@ -200,5 +275,6 @@ const styles = StyleSheet.create({
   rowValue: { fontSize: 12, color: '#94a3b8', marginTop: 2 },
   guestState: { alignItems: 'center', paddingVertical: 10 },
   loginBtn: { marginTop: 20, backgroundColor: '#16a34a', paddingHorizontal: 24, paddingVertical: 12, borderRadius: 12, shadowColor: '#16a34a', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.2, shadowRadius: 8, elevation: 4 },
-  loginBtnText: { color: '#fff', fontSize: 14, fontWeight: '700' }
+  loginBtnText: { color: '#fff', fontSize: 14, fontWeight: '700' },
+  disabledText: { fontSize: 11, fontWeight: '700', color: '#94a3b8', textTransform: 'uppercase' }
 });

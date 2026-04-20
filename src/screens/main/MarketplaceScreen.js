@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '@/store/slices/authSlice';
 import { Store, ShoppingCart, Search, Filter, Info, Package, X } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useGetAvailableProduceQuery } from '@/store/api/marketplaceApi';
 
 const { width } = Dimensions.get('window');
 const CATEGORIES = ['ALL', 'CEREAL', 'PULSES', 'VEGETABLES', 'FRUITS', 'NUTS', 'OILSEEDS', 'SPICES', 'TUBERS', 'OTHER'];
