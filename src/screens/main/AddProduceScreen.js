@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12 },
   backBtn: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   headerTitle: { fontSize: 18, fontWeight: '800', color: '#0f172a' },
-  scrollContent: { padding: 24 },
+  scrollContent: { padding: 24, paddingBottom: 100 },
   intro: { marginBottom: 32 },
   introTitle: { fontSize: 24, fontWeight: '800', color: '#0f172a', marginBottom: 8 },
   introDesc: { fontSize: 14, color: '#64748b', lineHeight: 20 },

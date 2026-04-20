@@ -148,7 +148,7 @@ export function DashboardScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fcfdfd' },
-  scrollContent: { padding: 24, paddingBottom: 40 },
+  scrollContent: { padding: 24, paddingBottom: 100 },
   header: { 
     flexDirection: 'row', 
     justifyContent: 'space-between', 

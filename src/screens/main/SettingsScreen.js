@@ -245,7 +245,7 @@ export function SettingsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fcfdfd' },
-  scrollContent: { padding: 24 },
+  scrollContent: { padding: 24, paddingBottom: 100 },
   pageTitle: { fontSize: 24, fontWeight: '800', color: '#0f172a', marginBottom: 24 },
   
   profileCard: { backgroundColor: '#fff', borderRadius: 32, padding: 24, alignItems: 'center', shadowColor: '#64748b', shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.04, shadowRadius: 10, elevation: 3, borderWidth: 1, borderColor: '#f1f5f9', marginBottom: 24 },

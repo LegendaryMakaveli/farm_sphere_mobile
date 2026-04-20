@@ -1,11 +1,36 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+
+// expo-secure-store exports an empty object on web, so we fall back to localStorage
+const storage = {
+  async getItem(key) {
+    if (Platform.OS === 'web') {
+      return localStorage.getItem(key);
+    }
+    return SecureStore.getItemAsync(key);
+  },
+  async setItem(key, value) {
+    if (Platform.OS === 'web') {
+      localStorage.setItem(key, value);
+      return;
+    }
+    return SecureStore.setItemAsync(key, value);
+  },
+  async removeItem(key) {
+    if (Platform.OS === 'web') {
+      localStorage.removeItem(key);
+      return;
+    }
+    return SecureStore.deleteItemAsync(key);
+  },
+};
 
 export const loadCredentials = createAsyncThunk(
   'auth/loadCredentials',
   async () => {
-    const userStr = await SecureStore.getItemAsync('farmsphere_user');
-    const token = await SecureStore.getItemAsync('farmsphere_token');
+    const userStr = await storage.getItem('farmsphere_user');
+    const token = await storage.getItem('farmsphere_token');
     if (userStr && token) {
       return { user: JSON.parse(userStr), token };
     }
@@ -18,16 +43,16 @@ export const saveCredentials = createAsyncThunk(
   async (payload, { dispatch, getState }) => {
     // state will be updated via slice reducers first
     const { token, user } = getState().auth;
-    await SecureStore.setItemAsync('farmsphere_token', token);
-    await SecureStore.setItemAsync('farmsphere_user', JSON.stringify(user));
+    await storage.setItem('farmsphere_token', token);
+    await storage.setItem('farmsphere_user', JSON.stringify(user));
   }
 );
 
 export const removeCredentials = createAsyncThunk(
   'auth/removeCredentials',
   async () => {
-    await SecureStore.deleteItemAsync('farmsphere_token');
-    await SecureStore.deleteItemAsync('farmsphere_user');
+    await storage.removeItem('farmsphere_token');
+    await storage.removeItem('farmsphere_user');
   }
 );
 
