@@ -69,13 +69,11 @@ function MainTabs() {
       })}
     >
       <Tab.Screen 
-        name="Market" 
         component={MarketplaceScreen} 
         options={{ title: 'Market' }}
       />
       
       <Tab.Screen 
-        name="Portfolio" 
         component={PortfolioScreen} 
         options={{ title: 'Invest' }}
       />
@@ -84,7 +82,7 @@ function MainTabs() {
       
       {isAuthenticated && isFarmer && <Tab.Screen name="Plot" component={MyPlotScreen} />}
       
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen component={SettingsScreen} />
     </Tab.Navigator>
   );
 }
