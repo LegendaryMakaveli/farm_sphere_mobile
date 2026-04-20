@@ -54,6 +54,10 @@ function MainTabs() {
         tabBarInactiveTintColor: '#94a3b8',
         tabBarLabelStyle: { fontSize: 12, fontWeight: '700', marginBottom: 4 },
         tabBarStyle: {
+          position: 'absolute',
+          bottom: 20,
+          left: 0,
+          right: 0,
           height: 60,
           paddingTop: 8,
           paddingBottom: 6,
@@ -64,6 +68,8 @@ function MainTabs() {
           shadowOffset: { width: 0, height: -4 },
           shadowOpacity: 0.08,
           shadowRadius: 12,
+          borderRadius: 16,
+          marginHorizontal: 8,
         },
         headerShown: false,
       })}
