@@ -8,6 +8,7 @@
     "android": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --android",
     "ios": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --ios",
     "web": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first expo start --web",
+    "build": "expo export --platform web",
     "build:web": "expo export --platform web",
     "fix-deps": "EXPO_OFFLINE=1 NODE_OPTIONS=--dns-result-order=ipv4first npx expo install --fix"
   },
