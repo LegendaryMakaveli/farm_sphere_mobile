@@ -23,7 +23,26 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "pwa": {
+        "manifest": {
+          "name": "FarmSphere",
+          "short_name": "FarmSphere",
+          "description": "Sustainable AgTech for Investors and Farmers",
+          "theme_color": "#0D1117",
+          "background_color": "#0D1117",
+          "display": "standalone",
+          "orientation": "portrait",
+          "icons": [
+            {
+              "src": "./assets/pwa-icon.png",
+              "sizes": "512x512",
+              "type": "image/png"
+            }
+          ]
+        }
+      }
     },
     "plugins": [
       "expo-secure-store"

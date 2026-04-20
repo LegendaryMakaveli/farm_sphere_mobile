@@ -1,0 +1,14 @@
+services:
+  - type: static
+    name: farmsphere-mobile-web
+    env: static
+    buildCommand: npm install --legacy-peer-deps && npm run build:web
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: max-age=31536000
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
