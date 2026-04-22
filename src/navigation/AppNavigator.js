@@ -22,6 +22,7 @@ import { HistoryScreen } from '@/screens/main/HistoryScreen';
 import { PersonalDetailsScreen } from '@/screens/main/PersonalDetailsScreen';
 import { FarmerPlansScreen } from '@/screens/main/FarmerPlansScreen';
 import { AddProduceScreen } from '@/screens/main/AddProduceScreen';
+import { UserDirectoryScreen } from '@/screens/main/UserDirectoryScreen';
 
 function AuthStack() {
   return (
@@ -120,6 +121,7 @@ export function AppNavigator() {
         <Stack.Screen name="PersonalDetails" component={PersonalDetailsScreen} />
         <Stack.Screen name="FarmerPlans" component={FarmerPlansScreen} />
         <Stack.Screen name="AddProduce" component={AddProduceScreen} />
+        <Stack.Screen name="UserDirectory" component={UserDirectoryScreen} />
         {!isAuthenticated && (
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="Auth" component={AuthStack} />

@@ -13,7 +13,8 @@ import {
   Mail, 
   HelpCircle, 
   Key,
-  Briefcase
+  Briefcase,
+  Users
 } from 'lucide-react-native';
 
 import { 
@@ -38,6 +39,7 @@ export function SettingsScreen() {
   const roles = useSelector(selectRoles) || [];
   const isFarmer = useSelector(selectIsFarmer);
   const isInvestor = useSelector(selectIsInvestor);
+  const isAdmin = roles.includes('ADMIN');
   const isAuthenticated = !!user;
 
   const { data: profileStatusRes } = useGetProfileStatusQuery(undefined, { skip: !isAuthenticated });
@@ -229,6 +231,22 @@ export function SettingsScreen() {
             <SettingRow icon={Shield} title="Privacy Policy" color="#7c3aed" />
           </View>
         </View>
+
+        {/* Admin Portal */}
+        {isAdmin && (
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>Admin Portal</Text>
+            <View style={styles.rowContainer}>
+              <SettingRow 
+                icon={Users} 
+                title="User Directory" 
+                value="Manage all users" 
+                color="#b91c1c" 
+                onPress={() => navigation.navigate('UserDirectory')} 
+              />
+            </View>
+          </View>
+        )}
 
         {/* Logout */}
         {isAuthenticated && (
